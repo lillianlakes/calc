@@ -111,7 +111,8 @@ def math_operations(operation):
         # test = operations.add
         # print(test(int(a), int(b)))
         #print(operations.operation( int(a), int(b) ))
-        result = operations_dict[operation]( int(a), int(b) )
+        result = operations_dict.get(operation, operations.add)( int(a), int(b) )
+        # result = operations_dict[operation]( int(a), int(b) )
         
     except:
         result = "no arguments given"

@@ -19,21 +19,18 @@ def add_from_query():
     """takes in two arguments from request queries and adds them."""
     a = request.args.get("a")
     b = request.args.get("b")
+    result = ""
     try:
-        result = operations.add(int(a),int(b))
-        html = f"""<html>
+        result = operations.add( int(a), int(b) )
+        
+    except:
+        result = "no arguments given"
+            
+    html = f"""<html>
                 <body>
                     <h1>{result}</h1>
                 </body>
             </html>"""
-    except:
-        html = """<html>
-                <body>
-                    <h1>no arguments given</h1>
-                </body>
-            </html>"""
-    # print(test)
-
                 
     return html
     
@@ -42,21 +39,18 @@ def subtract_from_query():
     """takes in two arguments from request queries and subtracts them."""
     a = request.args.get("a")
     b = request.args.get("b")
+    result = ""
     try:
-        result = operations.sub(int(a),int(b))
-        html = f"""<html>
+        result = operations.sub( int(a), int(b) )
+        
+    except:
+        result = "no arguments given"
+            
+    html = f"""<html>
                 <body>
                     <h1>{result}</h1>
                 </body>
             </html>"""
-    except:
-        html = """<html>
-                <body>
-                    <h1>no arguments given</h1>
-                </body>
-            </html>"""
-    # print(test)
-
                 
     return html
     
@@ -65,21 +59,18 @@ def multiply_from_query():
     """takes in two arguments from request queries and multiplies them."""
     a = request.args.get("a")
     b = request.args.get("b")
+    result = ""
     try:
-        result = operations.mult(int(a),int(b))
-        html = f"""<html>
+        result = operations.mult( int(a), int(b) )
+        
+    except:
+        result = "no arguments given"
+            
+    html = f"""<html>
                 <body>
                     <h1>{result}</h1>
                 </body>
             </html>"""
-    except:
-        html = """<html>
-                <body>
-                    <h1>no arguments given</h1>
-                </body>
-            </html>"""
-    # print(test)
-
                 
     return html
     
@@ -88,19 +79,48 @@ def divide_from_query():
     """takes in two arguments from request queries and divides them."""
     a = request.args.get("a")
     b = request.args.get("b")
+    result = ""
     try:
-        result = operations.div(int(a),int(b))
-        html = f"""<html>
+        result = operations.div( int(a), int(b) )
+        
+    except:
+        result = "no arguments given"
+            
+    html = f"""<html>
                 <body>
                     <h1>{result}</h1>
                 </body>
             </html>"""
-    except:
-        html = """<html>
-                <body>
-                    <h1>no arguments given</h1>
-                </body>
-            </html>"""
-    # print(test)
                 
     return html
+   
+@app.route("/math/<operation>")
+def math_operations(operation):
+    """do an operation on a and b from query based on operation in path"""
+    a = request.args.get("a")
+    b = request.args.get("b")
+    result = ""
+    operations_dict = {
+        "add": operations.add,
+        "sub": operations.sub,
+        "mult": operations.mult,
+        "div": operations.div,
+    }
+    try:
+        # print(operation)
+        # test = operations.add
+        # print(test(int(a), int(b)))
+        #print(operations.operation( int(a), int(b) ))
+        result = operations_dict[operation]( int(a), int(b) )
+        
+    except:
+        result = "no arguments given"
+            
+    html = f"""<html>
+                <body>
+                    <h1>{result}</h1>
+                </body>
+            </html>"""
+                
+    return html
+    
